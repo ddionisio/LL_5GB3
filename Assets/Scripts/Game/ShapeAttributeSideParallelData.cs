@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "shapeAttributeSideParallel", menuName = "Game/Shape Attribute/Side Parallel")]
 public class ShapeAttributeSideParallelData : ShapeAttributeData {
 
-    public int count = 1; //at least 1
+    public int count = 1; //can be 0 for trapezium
 
     public override bool Evaluate(ShapeProfile shapeProfile) {
         int parallelCount = 0;

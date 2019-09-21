@@ -19,3 +19,67 @@ MonoBehaviour:
   languageExtraInfos:
   - key: welcome
     voiceDuration: 1.5
+  - key: triangle
+    voiceDuration: 1.5
+  - key: quadrilateral
+    voiceDuration: 1.5
+  - key: pentagon
+    voiceDuration: 1.5
+  - key: hexagon
+    voiceDuration: 1.5
+  - key: triangle_right
+    voiceDuration: 2
+  - key: triangle_equilateral
+    voiceDuration: 2
+  - key: triangle_isosceles
+    voiceDuration: 2
+  - key: triangle_scalene
+    voiceDuration: 2
+  - key: triangle_acute
+    voiceDuration: 2
+  - key: triangle_obtuse
+    voiceDuration: 2
+  - key: quad_rectangle
+    voiceDuration: 2
+  - key: quad_square
+    voiceDuration: 2
+  - key: quad_rhombus
+    voiceDuration: 2
+  - key: quad_parallelogram
+    voiceDuration: 3
+  - key: quad_trapezoid
+    voiceDuration: 2.5
+  - key: quad_trapezium
+    voiceDuration: 2.5
+  - key: quad_kite
+    voiceDuration: 1
+  - key: prop_90_degree
+    voiceDuration: 3
+  - key: prop_sides_equal_all
+    voiceDuration: 3
+  - key: prop_60_degree_all
+    voiceDuration: 3
+  - key: prop_sides_equal_two
+    voiceDuration: 3
+  - key: prop_angles_equal_two
+    voiceDuration: 3
+  - key: prop_sides_no_equal
+    voiceDuration: 3
+  - key: prop_angles_less_90_all
+    voiceDuration: 3
+  - key: prop_angle_greater_90
+    voiceDuration: 3
+  - key: prop_90_degree_all
+    voiceDuration: 3
+  - key: prop_opposite_sides_parallel
+    voiceDuration: 3
+  - key: prop_opposite_sides_equal
+    voiceDuration: 3
+  - key: prop_opposite_angles_equal
+    voiceDuration: 3
+  - key: prop_opposite_pair_parallel
+    voiceDuration: 3
+  - key: prop_sides_no_parallel
+    voiceDuration: 3
+  - key: prop_sides_pair_equal
+    voiceDuration: 3
