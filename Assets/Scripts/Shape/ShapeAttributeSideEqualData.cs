@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// At least X number of sides are inequal
+/// At least X number of sides are equal
 /// </summary>
-[CreateAssetMenu(fileName = "shapeAttributeSideInequal", menuName = "Game/Shape Attribute/Side Inequal")]
-public class ShapeAttributeSideInequalData : ShapeAttributeData {
-    public int count = 3;
+[CreateAssetMenu(fileName = "shapeAttributeSideEqual", menuName = "Game/Shape Attribute/Side Equal")]
+public class ShapeAttributeSideEqualData : ShapeAttributeData {
+    public int count = 2; //ensure it is at least 2 for this to make sense
+    public bool isAll;
 
     public override bool Evaluate(ShapeProfile shapeProfile) {
         int maxEqualCount = 0;
 
         var sides = shapeProfile.sideLengths;
         for(int i = 0; i < sides.Length; i++) {
-            var _count = 0;
+            var _count = 1;
 
             var sideCheckA = Mathf.RoundToInt(sides[i]);
 
@@ -31,6 +32,9 @@ public class ShapeAttributeSideInequalData : ShapeAttributeData {
                 maxEqualCount = _count;
         }
 
-        return sides.Length - maxEqualCount >= count;
+        if(isAll)
+            return maxEqualCount == sides.Length;
+
+        return maxEqualCount >= count;
     }
 }

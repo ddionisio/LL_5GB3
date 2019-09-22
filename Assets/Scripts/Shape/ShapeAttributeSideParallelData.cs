@@ -9,11 +9,17 @@ using UnityEngine;
 public class ShapeAttributeSideParallelData : ShapeAttributeData {
 
     public int count = 1; //can be 0 for trapezium
+    public bool exclusive; //if true, ensure match count is exactly equal to count
 
     public override bool Evaluate(ShapeProfile shapeProfile) {
         int parallelCount = 0;
 
         var sideDirs = shapeProfile.sideDirs;
+
+        //need at least 4 even sides for this to make sense
+        if(sideDirs.Length < 4 && sideDirs.Length % 2 != 0)
+            return false;
+
         int hCount = sideDirs.Length / 2;
 
         //compare opposite sides
@@ -26,6 +32,9 @@ public class ShapeAttributeSideParallelData : ShapeAttributeData {
             if(iAngle == 0 || iAngle == 180)
                 parallelCount++;
         }
+
+        if(exclusive)
+            return parallelCount == count;
 
         return parallelCount >= count;
     }

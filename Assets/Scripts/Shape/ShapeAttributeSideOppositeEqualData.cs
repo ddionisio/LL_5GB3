@@ -13,6 +13,11 @@ public class ShapeAttributeSideOppositeEqualData : ShapeAttributeData {
         int equalCount = 0;
 
         var sides = shapeProfile.sideLengths;
+
+        //need at least 4 even sides for this to make sense
+        if(sides.Length < 4 && sides.Length % 2 != 0)
+            return false;
+
         int hCount = sides.Length / 2;
 
         //compare opposite sides

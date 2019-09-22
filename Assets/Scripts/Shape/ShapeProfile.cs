@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShapeProfile : MonoBehaviour {
     [Header("Data")]
     public Shapes2D.Shape shape;
+    public float sideScale = 1f;
 
     public Vector2[] points {
         get {
@@ -47,11 +48,7 @@ public class ShapeProfile : MonoBehaviour {
     private Vector2[] mSideDirs;
     private float[] mAngles;
 
-    void Awake() {
-        ComputeAttributes();
-    }
-
-    private void ComputeAttributes() {
+    public void ComputeAttributes() {
         Vector2 s = shape.transform.localScale;
         var settings = shape.settings;
         var count = settings.polyVertices.Length;
@@ -82,7 +79,7 @@ public class ShapeProfile : MonoBehaviour {
                 var len = dpos.magnitude;
 
                 mSideDirs[i] = dpos / len;
-                mSideLengths[i] = len;
+                mSideLengths[i] = len * sideScale;
             }
         }
         else //fail-safe
@@ -119,5 +116,9 @@ public class ShapeProfile : MonoBehaviour {
         }
         else //fail-safe
             mAngles = new float[0];
+    }
+
+    void Awake() {
+        ComputeAttributes();
     }
 }

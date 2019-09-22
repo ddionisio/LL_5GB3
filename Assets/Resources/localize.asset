@@ -27,6 +27,10 @@ MonoBehaviour:
     voiceDuration: 1.5
   - key: hexagon
     voiceDuration: 1.5
+  - key: octagon
+    voiceDuration: 1.5
+  - key: decagon
+    voiceDuration: 1.5
   - key: triangle_right
     voiceDuration: 2
   - key: triangle_equilateral
@@ -53,6 +57,18 @@ MonoBehaviour:
     voiceDuration: 2.5
   - key: quad_kite
     voiceDuration: 1
+  - key: prop_side_3
+    voiceDuration: 2
+  - key: prop_side_4
+    voiceDuration: 2
+  - key: prop_side_5
+    voiceDuration: 2
+  - key: prop_side_6
+    voiceDuration: 2
+  - key: prop_side_8
+    voiceDuration: 2
+  - key: prop_side_10
+    voiceDuration: 2
   - key: prop_90_degree
     voiceDuration: 3
   - key: prop_sides_equal_all

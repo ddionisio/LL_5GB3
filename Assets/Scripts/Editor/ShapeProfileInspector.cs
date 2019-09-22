@@ -5,6 +5,11 @@ using UnityEditor;
 
 [CustomEditor(typeof(ShapeProfile))]
 public class ShapeProfileInspector : Editor {
+
+    private bool mShapeCategoryFoldout;
+
+    private static ShapeCategoryData[] mShapeCategories;
+
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
@@ -31,7 +36,7 @@ public class ShapeProfileInspector : Editor {
                     else
                         vert2 = verts[0] * scale;
 
-                    var length = (vert2 - vert1).magnitude;
+                    var length = (vert2 - vert1).magnitude * dat.sideScale;
                     var iLength = Mathf.RoundToInt(length);
 
                     EditorGUILayout.LabelField(i.ToString(), iLength.ToString());
@@ -67,6 +72,40 @@ public class ShapeProfileInspector : Editor {
                     EditorGUILayout.LabelField(i.ToString(), iAngle.ToString());
                 }
             }
+
+            mShapeCategoryFoldout = EditorGUILayout.Foldout(mShapeCategoryFoldout, "Categories");
+            if(mShapeCategoryFoldout) {
+                //grab shape categories
+                if(mShapeCategories == null)
+                    RefreshShapeCategories();
+
+                //determine which category this shape fits in, and display
+                for(int i = 0; i < mShapeCategories.Length; i++) {
+                    var cat = mShapeCategories[i];
+                    if(!cat) continue;
+
+                    if(cat.Evaluate(dat))
+                        GUILayout.Label("- " + cat.label);
+                }
+
+                if(GUILayout.Button("Refresh")) {
+                    dat.ComputeAttributes();
+                    RefreshShapeCategories();
+                    mShapeCategoryFoldout = true;
+                    Repaint();
+                }
+            }
+        }
+    }
+
+    private void RefreshShapeCategories() {
+        var guids = AssetDatabase.FindAssets("t:ShapeCategoryData");
+
+        mShapeCategories = new ShapeCategoryData[guids.Length];
+
+        for(int i = 0; i < guids.Length; i++) {
+            var path = AssetDatabase.GUIDToAssetPath(guids[i]);
+            mShapeCategories[i] = AssetDatabase.LoadAssetAtPath<ShapeCategoryData>(path);
         }
     }
 }

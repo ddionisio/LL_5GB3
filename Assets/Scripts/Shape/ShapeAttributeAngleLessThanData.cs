@@ -9,6 +9,7 @@ using UnityEngine;
 public class ShapeAttributeAngleLessThanData : ShapeAttributeData {
     public int angle;
     public int count = 1;
+    public bool isAll;
 
     public override bool Evaluate(ShapeProfile shapeProfile) {
         int matchCount = 0;
@@ -19,6 +20,9 @@ public class ShapeAttributeAngleLessThanData : ShapeAttributeData {
             if(iAngle < angle)
                 matchCount++;
         }
+
+        if(isAll)
+            return matchCount == angles.Length;
 
         return matchCount >= count;
     }

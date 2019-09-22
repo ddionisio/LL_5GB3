@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "shapeAttributeAngleEqual", menuName = "Game/Shape Attribute/Angle Equal")]
 public class ShapeAttributeAngleEqualData : ShapeAttributeData {
     public int count = 2; //ensure it is at least 2 for this to make sense
+    public bool isAll;
 
     public override bool Evaluate(ShapeProfile shapeProfile) {
         int maxEqualCount = 0;
@@ -30,6 +31,9 @@ public class ShapeAttributeAngleEqualData : ShapeAttributeData {
             if(_count > maxEqualCount)
                 maxEqualCount = _count;
         }
+
+        if(isAll)
+            return maxEqualCount >= angles.Length;
 
         return maxEqualCount >= count;
     }
