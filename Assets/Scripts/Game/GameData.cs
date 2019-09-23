@@ -18,7 +18,8 @@ public class GameData : M8.SingletonScriptableObject<GameData> {
     public string tagLevel;
 
     public float metricScale = 1f;
-        
+    public float cursorHoldDelay = 0.3f;
+
     public RankData[] ranks; //highest to lowest    
 
     [Header("Levels")]

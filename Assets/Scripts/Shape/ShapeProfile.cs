@@ -43,10 +43,16 @@ public class ShapeProfile : MonoBehaviour {
         }
     }
 
+    public bool isCollected { get; private set; }
+
     private Vector2[] mPoints;
     private float[] mSideLengths;
     private Vector2[] mSideDirs;
     private float[] mAngles;
+
+    public void Collect() {
+        isCollected = true;
+    }
 
     public void ComputeAttributes() {
         Vector2 s = shape.transform.localScale;

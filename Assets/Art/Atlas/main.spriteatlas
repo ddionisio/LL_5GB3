@@ -45,7 +45,8 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 4cf1d0dfea113d5498f55e7cf68331e9, type: 3}
     - {fileID: 102900000, guid: 005bba6aafc2d7b4f848907882ae853d, type: 3}
     - {fileID: 102900000, guid: a173bd8b3ab1bd8408f988292f7a2231, type: 3}
-    totalSpriteSurfaceArea: 39729
+    - {fileID: 102900000, guid: 6f18ba041cf39b049b92b6e7c9f55214, type: 3}
+    totalSpriteSurfaceArea: 56008
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -58,6 +59,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: cfce0ce1b6c72e54f9981e474f39ca7c, type: 3}
   - {fileID: 21300002, guid: bf8c0222be72dfd48a68e5cf2a7ed5c1, type: 3}
   - {fileID: 21300000, guid: bf8c0222be72dfd48a68e5cf2a7ed5c1, type: 3}
+  - {fileID: 21300000, guid: 069caac24145d1f41a2ce5dd9f49bf81, type: 3}
   - {fileID: 21300000, guid: 1abaebf232c3b9d409c5c9383ee84f5d, type: 3}
   - {fileID: 2383154019900357971, guid: c05e5e136fe7a084084e48c38b81b054, type: 3}
   - {fileID: -4249189435241424335, guid: c05e5e136fe7a084084e48c38b81b054, type: 3}
@@ -67,9 +69,13 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 761a39f37c970494692893c09089ec0a, type: 3}
   - {fileID: 21300000, guid: 44a2e43498084d140b46c5499e074241, type: 3}
   - {fileID: 21300000, guid: d985b654a2dd4e54482f774cec3f7b9c, type: 3}
+  - {fileID: 21300000, guid: fd0292c4e022e8a4eb34089bf9e98374, type: 3}
   - {fileID: 21300000, guid: 21c769e4040edd24e83c0830fb109b60, type: 3}
+  - {fileID: 21300000, guid: 08d122f41cb4d294d9f5112304b14505, type: 3}
   - {fileID: 21300000, guid: e9c8ee955c09c344aa79e9bb93b94216, type: 3}
   - {fileID: 21300000, guid: 32838fd525c8e4947a91217e016c673e, type: 3}
+  - {fileID: 21300000, guid: 63a527f61ac87224cb15c6b6c304cbc6, type: 3}
+  - {fileID: 21300000, guid: 0e41974799a06364d86b4b464a928e54, type: 3}
   - {fileID: 21300000, guid: bf01b0b7199ec26448b016fd2de647e5, type: 3}
   - {fileID: 21300000, guid: 326ab6c73d9e81346bb6774298a0d825, type: 3}
   - {fileID: 21300000, guid: 5427e4f7e1cb9704892fb4854f1cf6a9, type: 3}
@@ -91,10 +97,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7168da6aea1c4154bbc52d54856e6639, type: 3}
   - {fileID: 21300000, guid: 5952baaa48d611842a22716276cee699, type: 3}
   - {fileID: 21300000, guid: 781b8debc0b4b7741bb22f7e896e042d, type: 3}
+  - {fileID: 21300000, guid: 6e46d65c795b56344b389f1886fb3982, type: 3}
   - {fileID: 21300000, guid: 71070d9cb8e6b574a8e999cb3dde2157, type: 3}
   - {fileID: 21300000, guid: 36ce24ec9ae04524289ce0e80bf270be, type: 3}
   - {fileID: 21300000, guid: c5a54a7e88b59e547a8905c1ad93d892, type: 3}
   - {fileID: 21300000, guid: d100bf3fba8e48343b4f69fe5447d682, type: 3}
+  - {fileID: 21300000, guid: 49f63cbf9fa458c4cbc656fbdbb5124a, type: 3}
   m_PackedSpriteNamesToIndex:
   - star
   - downArrow
@@ -105,6 +113,7 @@ SpriteAtlas:
   - edge_shade_left_8x1
   - shadeWhite_bottomLeft
   - shadeWhite
+  - spaceCapsule
   - explodePixel2
   - roundRectGlow
   - roundRectGlow_bottom
@@ -114,9 +123,13 @@ SpriteAtlas:
   - blob3
   - explodePixel3
   - circleGlow
+  - motherbaseFrogTosser2
   - explodePixel5
+  - devicerBody
   - outline1x1
   - beam
+  - devicerEye
+  - motherbaseFrogTosser1
   - explodePixel1
   - circle32x32
   - dot
@@ -138,9 +151,11 @@ SpriteAtlas:
   - gradient8x8
   - ringGlow
   - blob2
+  - devicerMouthClose
   - blob1
   - circleGlowTiny
   - edge_shade
   - tutorialHandPoint
+  - devicerMouthOpen
   m_Tag: main
   m_IsVariant: 0
