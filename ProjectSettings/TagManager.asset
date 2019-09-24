@@ -40,6 +40,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 271984693
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Shape
+    uniqueID: 2271195743
+    locked: 0
+  - name: Entity
+    uniqueID: 4173221855
+    locked: 0
+  - name: ShapeCollect
+    uniqueID: 3403381279
+    locked: 0
+  - name: UI
+    uniqueID: 604707465
+    locked: 0
+  - name: FX
+    uniqueID: 376576613
     locked: 0

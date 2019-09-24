@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Put this in UI screen space canvas
@@ -11,6 +12,7 @@ public class CursorCollector : MonoBehaviour {
 
     [Header("Display")]
     public Transform root;
+    public Image fillImage;
 
     [Header("Animation")]
     public M8.Animator.Animate animator;
@@ -18,8 +20,6 @@ public class CursorCollector : MonoBehaviour {
     public string takeEnter;
     [M8.Animator.TakeSelector(animatorField = "animator")]
     public string takeExit;
-    [M8.Animator.TakeSelector(animatorField = "animator")]
-    public string takeFill;
     [M8.Animator.TakeSelector(animatorField = "animator")]
     public string takeError;
     [M8.Animator.TakeSelector(animatorField = "animator")]
@@ -31,9 +31,7 @@ public class CursorCollector : MonoBehaviour {
             var v = Mathf.Clamp01(value);
             if(mFillValue != v) {
                 mFillValue = v;
-
-                if(animator && !string.IsNullOrEmpty(takeFill))
-                    animator.Goto(takeFill, mFillValue * mTakeFillDelay);
+                fillImage.fillAmount = mFillValue;
             }
         }
     }
@@ -41,7 +39,6 @@ public class CursorCollector : MonoBehaviour {
     public bool isBusy { get { return animator ? animator.isPlaying : false; } }
 
     private float mFillValue;
-    private float mTakeFillDelay;
     private Vector2 mCurVel;
 
     public void Error() {
@@ -66,8 +63,7 @@ public class CursorCollector : MonoBehaviour {
         if(animator) {
             animator.takeCompleteCallback += OnAnimationEnd;
 
-            if(!string.IsNullOrEmpty(takeFill))
-                mTakeFillDelay = animator.GetTakeTotalTime(takeFill);
+            fillImage.fillAmount = 0f;
         }
     }
 
@@ -112,7 +108,7 @@ public class CursorCollector : MonoBehaviour {
                 }
                 break;
         }
-
+                
         root.gameObject.SetActive(isActive);
 
         if(animator && !string.IsNullOrEmpty(take))
