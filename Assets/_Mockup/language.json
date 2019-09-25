@@ -60,6 +60,7 @@
     "prop_opposite_angles_equal": "Opposite angles are equal.",
     "prop_opposite_pair_parallel": "Two sides are parallel.",
     "prop_sides_no_parallel": "No sides are parallel.",
-    "prop_sides_pair_equal": "Two pairs of sides are equal."
+    "prop_sides_pair_equal": "Two pairs of sides are equal.",
+    "shape_categories": "Shape Categories"
   }
 }

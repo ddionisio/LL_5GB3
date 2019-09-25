@@ -157,7 +157,7 @@ public class Spaceship : MonoBehaviour {
 
             //setup beam size, assume pivot is top
             var beamPos = beamRender.transform.position;
-            var beamLen = Mathf.Abs(destPos.y - beamPos.y) + beamLengthOfs;
+            var beamLen = Mathf.Abs(collectPos.y - beamPos.y) + beamLengthOfs;
             var beamSize = beamRender.size;
             beamSize.y = beamLen;
             beamRender.size = beamSize;

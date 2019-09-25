@@ -60,7 +60,7 @@ public class LevelController : GameModeController<LevelController> {
 
         shapeProfile.Collect();
 
-        mShapesCollected.Add(shapeProfile);
+        shapesCollected.Add(shapeProfile);
 
         shapeCollectedCallback?.Invoke(shapeProfile);
 
