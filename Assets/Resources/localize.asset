@@ -99,3 +99,5 @@ MonoBehaviour:
     voiceDuration: 3
   - key: prop_sides_pair_equal
     voiceDuration: 3
+  - key: proceed_instruct
+    voiceDuration: 3

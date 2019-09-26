@@ -45,6 +45,8 @@ public class ShapeProfile : MonoBehaviour {
 
     public bool isCollected { get; private set; }
 
+    public int score { get; set; }
+
     private Vector2[] mPoints;
     private float[] mSideLengths;
     private Vector2[] mSideDirs;

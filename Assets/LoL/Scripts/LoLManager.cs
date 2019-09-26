@@ -202,7 +202,17 @@ public class LoLManager : M8.SingletonBehaviour<LoLManager> {
         if(mSpeakQueueRout == null)
             mSpeakQueueRout = StartCoroutine(DoSpeakQueue());
     }
-    
+
+    public void StopSpeakQueue() {
+        if(mSpeakQueueRout != null) {
+            StopCoroutine(mSpeakQueueRout);
+            mSpeakQueueRout = null;
+        }
+
+        mSpeakQueueGroup = null;
+        mSpeakQueues.Clear();
+    }
+
     public MultipleChoiceQuestion GetQuestion(int index) {
         if(mQuestionsList == null)
             return null;
@@ -434,16 +444,6 @@ public class LoLManager : M8.SingletonBehaviour<LoLManager> {
             mLanguageJson = json;
             mIsLanguageHandled = true;
         }
-    }
-
-    private void StopSpeakQueue() {
-        if(mSpeakQueueRout != null) {
-            StopCoroutine(mSpeakQueueRout);
-            mSpeakQueueRout = null;
-        }
-
-        mSpeakQueueGroup = null;
-        mSpeakQueues.Clear();
     }
 
     private IEnumerator DoWait(float delay) {

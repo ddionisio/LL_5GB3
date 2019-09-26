@@ -20,7 +20,11 @@ public class GameData : M8.SingletonScriptableObject<GameData> {
     public float metricScale = 1f;
     public float cursorHoldDelay = 0.3f;
 
-    public RankData[] ranks; //highest to lowest    
+    public string measureLengthType = "cm";
+
+    public string modalShapeCategory = "shapeCategory";
+
+    public RankData[] ranks; //highest to lowest
 
     [Header("Levels")]
     public M8.SceneAssetPath[] levels;

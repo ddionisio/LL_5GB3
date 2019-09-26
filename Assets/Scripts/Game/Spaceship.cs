@@ -59,6 +59,10 @@ public class Spaceship : MonoBehaviour {
         LevelController.instance.shapeCollectedCallback += OnCollect;
     }
 
+    void Awake() {
+        displayGO.SetActive(false);
+    }
+
     void OnActionModeChanged() {
 
         Mode toMode = mMode;
@@ -91,7 +95,8 @@ public class Spaceship : MonoBehaviour {
                     mRout = StartCoroutine(DoEnter());
                     break;
                 case Mode.Hide:
-                    mRout = StartCoroutine(DoExit());
+                    if(displayGO.activeSelf)
+                        mRout = StartCoroutine(DoExit());
                     break;
                 case Mode.Collect:
                     mRout = StartCoroutine(DoCollect());
