@@ -6,6 +6,10 @@ public class LevelController : GameModeController<LevelController> {
     [Header("Data")]
     public ShapeCategoryData[] shapeCategories;
 
+    public bool analyzeIsShapeSolid;
+    [M8.EnumMask]
+    public ShapeAnalyzeModal.MeasureDisplayFlag analyzeMeasureDisplay;
+
     [Header("Interactions")]
     public Spaceship spaceship;
     public CursorCollector cursor;
@@ -54,6 +58,8 @@ public class LevelController : GameModeController<LevelController> {
     private ShapeProfile[] mShapes;
     private M8.CacheList<ShapeProfile> mShapesCollected;
 
+    private M8.GenericParams mAnalyzeParms = new M8.GenericParams();
+
     public void CollectShape(ShapeProfile shapeProfile) {
         if(shapeProfile.isCollected) //fail-safe
             return;
@@ -65,6 +71,17 @@ public class LevelController : GameModeController<LevelController> {
         shapeCollectedCallback?.Invoke(shapeProfile);
 
         actionMode = ActionMode.Collect;
+    }
+
+    public void AnalyzeLastCollectedShape() {
+        actionMode = ActionMode.Analyze;
+
+        mAnalyzeParms[ShapeAnalyzeModal.parmUseSolid] = analyzeIsShapeSolid;
+        mAnalyzeParms[ShapeAnalyzeModal.parmMeasureDisplayFlags] = analyzeMeasureDisplay;
+        mAnalyzeParms[ShapeAnalyzeModal.parmShapeProfile] = lastShapeCollected;
+        mAnalyzeParms[ShapeAnalyzeModal.parmShapes] = shapeCategories;
+
+        M8.ModalManager.main.Open(GameData.instance.modalShapeAnalyze, mAnalyzeParms);
     }
 
     private void InitShapes() {

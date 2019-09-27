@@ -12,6 +12,8 @@ public class AnimatorEnterExit : MonoBehaviour {
     public bool resetOnEnable = false;
 
     public bool isPlaying { get { return animator ? animator.isPlaying : false; } }
+    public bool isEntering { get { return animator ? animator.currentPlayingTakeName == takeEnter : false; } }
+    public bool isExiting { get { return animator ? animator.currentPlayingTakeName == takeExit : false; } }
 
     public void PlayEnter() {
         if(animator && !string.IsNullOrEmpty(takeEnter))

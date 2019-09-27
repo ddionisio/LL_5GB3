@@ -23,6 +23,10 @@ public class GameData : M8.SingletonScriptableObject<GameData> {
     public string measureLengthType = "cm";
 
     public string modalShapeCategory = "shapeCategory";
+    public string modalShapeAnalyze = "shapeAnalyzer";
+
+    public int scoreShape = 1000;
+    public int scorePenalty = 100;
 
     public RankData[] ranks; //highest to lowest
 
