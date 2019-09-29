@@ -24,7 +24,7 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
                 mIsInputEnabled = value;
 
                 if(!mIsInputEnabled && mIsDragging) {
-                    EndDrag(true);
+                    EndDrag();
 
                     dragCancelCallback?.Invoke(this);
                 }
@@ -41,7 +41,6 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
     private bool mIsInputEnabled;
 
     private bool mIsDragging;
-    private bool mIsMoving;
 
     private Vector2 mDragMoveTo;
     private Vector2 mMoveVel;
@@ -51,6 +50,9 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
 
         mIsDragging = false;
         mIsInputEnabled = false;
+
+        dragRoot.SetParent(transform, false);
+        dragRoot.localPosition = Vector3.zero;
 
         titleText.text = M8.Localize.Get(dat.textRef);
 
@@ -62,15 +64,11 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
     void OnApplicationFocus(bool focus) {
         if(!focus) {
             if(mIsDragging) {
-                EndDrag(false);
+                EndDrag();
 
                 dragCancelCallback?.Invoke(this);
             }
         }
-    }
-
-    void OnDisable() {
-        EndDrag(false);
     }
 
     void Update() {
@@ -78,19 +76,7 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
             Vector2 curPos = dragRoot.position;
             dragRoot.position = Vector2.SmoothDamp(curPos, mDragMoveTo, ref mMoveVel, moveDelay);
         }
-        else if(mIsMoving) {
-            Vector2 curPos = dragRoot.position;
-            Vector2 toPos = transform.position;
 
-            if(curPos == toPos) {
-                mIsMoving = false;
-
-                dragRoot.SetParent(transform, false);
-                dragRoot.localPosition = Vector3.zero;
-            }
-            else
-                dragRoot.position = Vector2.SmoothDamp(curPos, toPos, ref mMoveVel, moveDelay);
-        }
     }
 
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData) {
@@ -117,24 +103,16 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
     void IEndDragHandler.OnEndDrag(PointerEventData eventData) {
         if(!mIsDragging)
             return;
-
-        EndDrag(true);
-
+                
         dragEndCallback?.Invoke(this, eventData);
+
+        EndDrag();
     }
 
-    private void EndDrag(bool moveBack) {
+    private void EndDrag() {
         mIsDragging = false;
 
-        if(moveBack) {
-            mIsMoving = true; //put back to origin, then revert parent afterwards
-            mMoveVel = Vector2.zero;
-        }
-        else {
-            mIsMoving = false;
-
-            dragRoot.SetParent(transform, false);
-            dragRoot.localPosition = Vector3.zero;
-        }
+        dragRoot.SetParent(transform, false);
+        dragRoot.localPosition = Vector3.zero;
     }
 }

@@ -116,7 +116,7 @@ public class CursorCollector : MonoBehaviour {
     }
 
     void OnAnimationEnd(M8.Animator.Animate anim, M8.Animator.Take take) {
-        if(take.name == takeExit)
+        if(take.name == takeExit || take.name == takeCollect)
             root.gameObject.SetActive(false);
     }
 }

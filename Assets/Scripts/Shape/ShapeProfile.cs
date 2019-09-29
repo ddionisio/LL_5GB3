@@ -52,6 +52,13 @@ public class ShapeProfile : MonoBehaviour {
     private Vector2[] mSideDirs;
     private float[] mAngles;
 
+    public Vector2[] GeneratePolyPoints() {
+        var shapePts = shape.settings.polyVertices;
+        var pts = new Vector2[shapePts.Length];
+        System.Array.Copy(shapePts, 0, pts, 0, shapePts.Length);
+        return shapePts;
+    }
+
     public void Collect() {
         isCollected = true;
     }

@@ -46,7 +46,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 005bba6aafc2d7b4f848907882ae853d, type: 3}
     - {fileID: 102900000, guid: a173bd8b3ab1bd8408f988292f7a2231, type: 3}
     - {fileID: 102900000, guid: 6f18ba041cf39b049b92b6e7c9f55214, type: 3}
-    totalSpriteSurfaceArea: 65008
+    totalSpriteSurfaceArea: 69104
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -63,6 +63,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 1abaebf232c3b9d409c5c9383ee84f5d, type: 3}
   - {fileID: 2383154019900357971, guid: c05e5e136fe7a084084e48c38b81b054, type: 3}
   - {fileID: -4249189435241424335, guid: c05e5e136fe7a084084e48c38b81b054, type: 3}
+  - {fileID: 21300000, guid: 0729df330c946034295e7cc91375467d, type: 3}
   - {fileID: 21300000, guid: df4b3443a66668842a035a006fef682c, type: 3}
   - {fileID: 21300000, guid: 6365d063b104ede43a6f2866a82d29fe, type: 3}
   - {fileID: 21300000, guid: e5dc777390553e4499a405c82af83aef, type: 3}
@@ -120,6 +121,7 @@ SpriteAtlas:
   - explodePixel2
   - roundRectGlow
   - roundRectGlow_bottom
+  - ring64x64
   - circleFuzzyGlow
   - ringGlowLarge
   - explodePixel4

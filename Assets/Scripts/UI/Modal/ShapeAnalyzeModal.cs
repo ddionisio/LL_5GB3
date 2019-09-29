@@ -26,10 +26,19 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
     [Header("Templates")]
     public Transform cacheRoot;
 
+    public Image angleTemplate;
+    public RectTransform lengthTemplate;
+    public Text measureTextTemplate;
+
     public ShapeAnalyzeCategoryWidget categoryWidgetTemplate;
 
     [Header("Config")]
     public float evaluateDelay = 0.5f; //delay per category
+    public float shapeSizeMax;
+
+    public float angleTextOfs = 24f;
+    public float measureLengthDisplayOfs = 1f;
+    public float lengthTextOfs = 30f;
 
     [Header("Display")]
     public Text descText;
@@ -65,6 +74,17 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
     private M8.CacheList<ShapeAnalyzeCategoryWidget> mShapeCategoryWidgetActivePlaced = new M8.CacheList<ShapeAnalyzeCategoryWidget>(shapeCategoryCapacity);
     private M8.CacheList<ShapeAnalyzeCategoryWidget> mShapeCategoryWidgetActivePicks = new M8.CacheList<ShapeAnalyzeCategoryWidget>(shapeCategoryCapacity);
+
+    private const int measureDisplayCapacity = 4;
+
+    private M8.CacheList<Image> mAngleWidgetActives = new M8.CacheList<Image>(measureDisplayCapacity);
+    private M8.CacheList<Image> mAngleWidgetCache = new M8.CacheList<Image>(measureDisplayCapacity);
+
+    private M8.CacheList<RectTransform> mLengthWidgetActives = new M8.CacheList<RectTransform>(measureDisplayCapacity);
+    private M8.CacheList<RectTransform> mLengthWidgetCache = new M8.CacheList<RectTransform>(measureDisplayCapacity);
+
+    private M8.CacheList<Text> mTextActives = new M8.CacheList<Text>(measureDisplayCapacity*2);
+    private M8.CacheList<Text> mTextCache = new M8.CacheList<Text>(measureDisplayCapacity*2);
 
     private System.Text.StringBuilder mDescStrBuff = new System.Text.StringBuilder();
 
@@ -190,8 +210,11 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
     }
 
     void Awake() {
+        shapeSolid.Configure();
+        shapeOutline.Configure();
+
         //generate category widget cache        
-        for(int i = 0; i <shapeCategoryCapacity; i++) {
+        for(int i = 0; i < mShapeCategoryWidgetCache.Capacity; i++) {
             var inst = Instantiate(categoryWidgetTemplate, cacheRoot);
 
             inst.dragCallback += OnCategoryDrag;
@@ -202,11 +225,29 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         }
         categoryWidgetTemplate.gameObject.SetActive(false);
 
-        //generate angle display cache
+        //generate measure display caches
+        for(int i = 0; i < mAngleWidgetCache.Capacity; i++) {
+            var angleWidget = Instantiate(angleTemplate, cacheRoot);
+            mAngleWidgetCache.Add(angleWidget);
+        }
 
-        //generate measure length display cache
+        angleTemplate.gameObject.SetActive(false);
+
+        //generate length display caches
+        for(int i = 0; i < mLengthWidgetCache.Capacity; i++) {
+            var itm = Instantiate(lengthTemplate, cacheRoot);
+            mLengthWidgetCache.Add(itm);
+        }
+
+        lengthTemplate.gameObject.SetActive(false);
 
         //generate text cache
+        for(int i = 0; i < mTextCache.Capacity; i++) {
+            var itm = Instantiate(measureTextTemplate, cacheRoot);
+            mTextCache.Add(itm);
+        }
+
+        measureTextTemplate.gameObject.SetActive(false);
     }
 
     void OnCategoryDrag(ShapeAnalyzeCategoryWidget widget, PointerEventData eventData) {
@@ -281,6 +322,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
         //clear out picks
         ClearCategoryPicks();
+
+        //ClearMeasureDisplays();
 
         int correctCount = 0;
         int wrongCount = 0;
@@ -377,10 +420,129 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
     }
 
     private void ApplyShape() {
+        if(!mShapeProfile)
+            return;
+
         shapeSolid.gameObject.SetActive(mShapeUseSolid);
         shapeOutline.gameObject.SetActive(!mShapeUseSolid);
 
-        //apply
+        var shape = mShapeUseSolid ? shapeSolid : shapeOutline;
+
+        //set the proper aspect ratio
+        var s = mShapeProfile.transform.localScale;
+        if(s.x > s.y) {
+            var hRatio = s.y / s.x;
+
+            var rTrans = shape.transform as RectTransform;
+            var size = rTrans.sizeDelta;
+            size.x = shapeSizeMax;
+            size.y = shapeSizeMax * hRatio;
+            rTrans.sizeDelta = size;
+        }
+        else {
+            var vRatio = s.x / s.y;
+
+            var rTrans = shape.transform as RectTransform;
+            var size = rTrans.sizeDelta;
+            size.x = shapeSizeMax * vRatio;
+            size.y = shapeSizeMax;
+            rTrans.sizeDelta = size;
+        }
+
+        //copy points
+        var settings = shape.settings;
+
+        settings.polyVertices = mShapeProfile.shape.settings.polyVertices;
+
+        if(mMeasureDisplayFlags != MeasureDisplayFlag.None) {
+            var vtxPts = shape.GetPolygonWorldVertices();
+
+            //show angle displays
+            if((mMeasureDisplayFlags & MeasureDisplayFlag.Angle) != MeasureDisplayFlag.None) {
+                var angles = mShapeProfile.angles;
+                var dirs = mShapeProfile.sideDirs;
+
+                for(int i = 0; i < angles.Length; i++) {
+                    Vector2 pt0 = i > 0 ? vtxPts[i - 1] : vtxPts[vtxPts.Length - 1];
+                    Vector2 pt1 = vtxPts[i];
+                    Vector2 pt2 = i < vtxPts.Length - 1 ? vtxPts[i + 1] : vtxPts[0];
+
+                    Vector2 dir0 = (pt0 - pt1).normalized;
+                    Vector2 dir1 = dirs[i];
+
+                    //angle
+                    if(mAngleWidgetCache.Count > 0) {
+                        var angleWidget = mAngleWidgetCache.RemoveLast();
+                        angleWidget.transform.SetParent(shapeMeasureRoot, false);
+                        mAngleWidgetActives.Add(angleWidget);
+                                                
+                        angleWidget.transform.position = vtxPts[i];
+                        angleWidget.transform.up = dir1;
+
+                        var a = angleWidget.transform.eulerAngles; //prevent gimbal lock
+                        a.x = a.y = 0f;
+                        angleWidget.transform.eulerAngles = a;
+
+                        angleWidget.fillAmount = angles[i] / 360f;
+                    }
+
+                    //text
+                    if(mTextCache.Count > 0) {
+                        var textWidget = mTextCache.RemoveLast();
+                        textWidget.transform.SetParent(shapeMeasureDetailRoot, false);
+                        mTextActives.Add(textWidget);
+
+                        textWidget.text = Mathf.RoundToInt(angles[i]).ToString() + '°';
+                        textWidget.transform.position = pt1 + Vector2.Lerp(dir0, dir1, 0.5f).normalized * angleTextOfs;
+                    }
+                }
+            }
+
+            //show length displays
+            if((mMeasureDisplayFlags & MeasureDisplayFlag.Length) != MeasureDisplayFlag.None) {
+                var lens = mShapeProfile.sideLengths;
+                var dirs = mShapeProfile.sideDirs;
+
+                for(int i = 0; i < lens.Length; i++) {
+                    Vector2 pt1 = vtxPts[i];
+                    Vector2 pt2 = i < vtxPts.Length - 1 ? vtxPts[i + 1] : vtxPts[0];
+
+                    var dir = dirs[i];
+
+                    var up = new Vector2(dir.y, -dir.x);
+
+                    var midPt = Vector2.Lerp(pt1, pt2, 0.5f);
+
+                    //length
+                    if(mLengthWidgetCache.Count > 0) {
+                        var lenRect = mLengthWidgetCache.RemoveLast();
+                        lenRect.SetParent(shapeMeasureRoot, false);
+                        mLengthWidgetActives.Add(lenRect);
+
+                        lenRect.up = up;
+
+                        var a = lenRect.eulerAngles; //prevent gimbal lock
+                        a.x = a.y = 0f;
+                        lenRect.eulerAngles = a;
+
+                        lenRect.position = midPt + up * measureLengthDisplayOfs;
+
+                        var size = lenRect.sizeDelta;
+                        size.x = (pt2 - pt1).magnitude;
+                        lenRect.sizeDelta = size;
+                    }
+
+                    if(mTextCache.Count > 0) {
+                        var textWidget = mTextCache.RemoveLast();
+                        textWidget.transform.SetParent(shapeMeasureDetailRoot, false);
+                        mTextActives.Add(textWidget);
+
+                        textWidget.text = Mathf.RoundToInt(lens[i]).ToString() + GameData.instance.measureLengthType;
+                        textWidget.transform.position = midPt + up * lengthTextOfs;
+                    }
+                }
+            }
+        }
     }
 
     private void ClearCategoryPlaced() {
@@ -403,6 +565,35 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         }
 
         mShapeCategoryWidgetActivePicks.Clear();
+    }
+
+    private void ClearMeasureDisplays() {
+        //clear angles
+        for(int i = 0; i < mAngleWidgetActives.Count; i++) {
+            var widget = mAngleWidgetActives[i];
+            widget.transform.SetParent(cacheRoot);
+            mAngleWidgetCache.Add(widget);
+        }
+
+        mAngleWidgetActives.Clear();
+
+        //clear lengths
+        for(int i = 0; i < mLengthWidgetActives.Count; i++) {
+            var itm = mLengthWidgetActives[i];
+            itm.transform.SetParent(cacheRoot);
+            mLengthWidgetCache.Add(itm);
+        }
+
+        mLengthWidgetActives.Clear();
+
+        //clear texts
+        for(int i = 0; i < mTextActives.Count; i++) {
+            var itm = mTextActives[i];
+            itm.transform.SetParent(cacheRoot);
+            mTextCache.Add(itm);
+        }
+
+        mTextActives.Clear();
     }
 
     private void DefaultActiveDisplay() {

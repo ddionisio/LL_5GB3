@@ -18,8 +18,9 @@ MonoBehaviour:
   cursorHoldDelay: 0.3
   measureLengthType: cm
   modalShapeCategory: shapeCategory
+  modalShapeAnalyze: shapeAnalyzer
   scoreShape: 1000
-  scorePenalty: 200
+  scorePenalty: 250
   ranks:
   - text: S
     scale: 1
