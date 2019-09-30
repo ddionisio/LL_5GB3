@@ -34,16 +34,32 @@ public class GameData : M8.SingletonScriptableObject<GameData> {
     public M8.SceneAssetPath[] levels;
     public M8.SceneAssetPath end;
 
-    public void SaveCurLevelScore(int score) {
+    public void SaveCurLevelScore(int score, int scoreMax) {
         var ind = GetLevelIndex();
         if(ind == -1)
             return;
 
         M8.SceneState.instance.global.SetValue("levelScore" + ind, score, false);
+        M8.SceneState.instance.global.SetValue("levelScoreMax" + ind, scoreMax, false);
     }
 
     public int GetLevelScore(int level) {
         return M8.SceneState.instance.global.GetValue("levelScore" + level);
+    }
+
+    public int GetLevelScoreMax(int level) {
+        return M8.SceneState.instance.global.GetValue("levelScoreMax" + level);
+    }
+
+    public RankData GetRank(float scale) {
+        for(int i = 0; i < ranks.Length; i++) {
+            var rank = ranks[i];
+
+            if(scale >= rank.scale)
+                return rank;
+        }
+
+        return ranks[ranks.Length - 1];
     }
 
     /// <summary>

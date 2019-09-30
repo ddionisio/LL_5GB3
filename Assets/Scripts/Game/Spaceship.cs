@@ -168,6 +168,9 @@ public class Spaceship : MonoBehaviour {
             beamRender.size = beamSize;
 
             //setup collect
+            if(animator && !string.IsNullOrEmpty(takeCollect))
+                animator.ResetTake(takeCollect);
+
             var collectRender = mShapeCollect.shape.GetComponent<SpriteRenderer>();
             collectRender.sortingLayerName = collectSortLayer;
 
@@ -187,8 +190,10 @@ public class Spaceship : MonoBehaviour {
             mShapeCollect.gameObject.SetActive(false);
             mShapeCollect = null;
 
-            if(animator && !string.IsNullOrEmpty(takeIdle))
-                animator.Play(takeIdle);
+            if(animator && !string.IsNullOrEmpty(takeExit))
+                yield return animator.PlayWait(takeExit);
+
+            displayGO.SetActive(false);
         }
 
         mRout = null;

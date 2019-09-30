@@ -21,6 +21,7 @@
     "category": "Category",
     "categories_title": "CATEGORIES",
     "score": "Score:",
+    "score_total": "Total Score:",
     "rank": "Rank:",
     "property": "Property",
     "polygon": "Polygon",
@@ -65,6 +66,7 @@
     "prop_sides_no_parallel": "No sides are parallel.",
     "prop_sides_pair_equal": "Two pairs of sides are equal.",
     "shape_categories": "Shape Categories",
-    "proceed_instruct": "Press this button to proceed."
+    "proceed_instruct": "Press this button to proceed.",
+    "victory": "VICTORY"
   }
 }

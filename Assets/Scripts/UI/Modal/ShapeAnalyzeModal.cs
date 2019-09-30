@@ -429,7 +429,7 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         var shape = mShapeUseSolid ? shapeSolid : shapeOutline;
 
         //set the proper aspect ratio
-        var s = mShapeProfile.transform.localScale;
+        var s = mShapeProfile.scale;
         if(s.x > s.y) {
             var hRatio = s.y / s.x;
 

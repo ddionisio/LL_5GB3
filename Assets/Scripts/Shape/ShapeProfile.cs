@@ -47,6 +47,8 @@ public class ShapeProfile : MonoBehaviour {
 
     public int score { get; set; }
 
+    public Vector3 scale { get; private set; }
+
     private Vector2[] mPoints;
     private float[] mSideLengths;
     private Vector2[] mSideDirs;
@@ -64,7 +66,7 @@ public class ShapeProfile : MonoBehaviour {
     }
 
     public void ComputeAttributes() {
-        Vector2 s = shape.transform.localScale;
+        Vector2 s = scale;
         var settings = shape.settings;
         var count = settings.polyVertices.Length;
 
@@ -134,6 +136,8 @@ public class ShapeProfile : MonoBehaviour {
     }
 
     void Awake() {
+        scale = shape.transform.localScale;
+
         ComputeAttributes();
     }
 }
