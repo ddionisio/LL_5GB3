@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Shape
   - Level
+  - Spaceship
+  - Cursor
   layers:
   - Default
   - TransparentFX

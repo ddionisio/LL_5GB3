@@ -72,7 +72,6 @@ public class CursorCollector : MonoBehaviour {
         var curAction = LevelController.instance.actionMode;
         switch(curAction) {
             case ActionMode.Ready:
-            case ActionMode.Collect:
                 var pos = Input.mousePosition;
                 root.position = Vector2.SmoothDamp(root.position, pos, ref mCurVel, followDelay);
                 break;
@@ -98,7 +97,8 @@ public class CursorCollector : MonoBehaviour {
 
             case ActionMode.Collect:
                 isActive = true;
-                take = takeCollect;
+                //take = takeCollect;
+                take = takeExit;
                 break;
 
             default:

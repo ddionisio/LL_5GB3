@@ -37,7 +37,9 @@ MonoBehaviour:
   - text: D
     scale: 0
     color: {r: 0.6, g: 0.48235297, b: 0.48235297, a: 1}
-  levels: []
+  levels:
+  - name: level0
+    path: Assets/Scenes/level0.unity
   end:
     name: 
     path: 

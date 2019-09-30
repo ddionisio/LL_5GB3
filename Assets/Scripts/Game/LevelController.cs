@@ -11,8 +11,34 @@ public class LevelController : GameModeController<LevelController> {
     public ShapeAnalyzeModal.MeasureDisplayFlag analyzeMeasureDisplay;
 
     [Header("Interactions")]
-    public Spaceship spaceship;
-    public CursorCollector cursor;
+    [M8.TagSelector]
+    public string tagSpaceship = "Spaceship";
+    [M8.TagSelector]
+    public string tagCursor = "Cursor";
+
+    public Spaceship spaceship {
+        get {
+            if(!mSpaceship) {
+                var go = GameObject.FindGameObjectWithTag(tagSpaceship);
+                if(go)
+                    mSpaceship = go.GetComponent<Spaceship>();
+            }
+
+            return mSpaceship;
+        }
+    }
+
+    public CursorCollector cursor {
+        get {
+            if(!mCursor) {
+                var go = GameObject.FindGameObjectWithTag(tagCursor);
+                if(go)
+                    mCursor = go.GetComponent<CursorCollector>();
+            }
+
+            return mCursor;
+        }
+    }
 
     public ActionMode actionMode {
         get { return mActionMode; }
@@ -53,6 +79,9 @@ public class LevelController : GameModeController<LevelController> {
 
     public event System.Action actionChangedCallback;
     public event System.Action<ShapeProfile> shapeCollectedCallback;
+
+    private Spaceship mSpaceship;
+    private CursorCollector mCursor;
 
     private ActionMode mActionMode = ActionMode.None;
     private ShapeProfile[] mShapes;

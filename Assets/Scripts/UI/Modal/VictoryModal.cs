@@ -13,6 +13,8 @@ public class VictoryModal : M8.ModalController, M8.IModalPush {
     private int mScoreMax;
 
     public void Next() {
+        Close();
+
         GameData.instance.SaveCurLevelScore(mScore, mScoreMax);
 
         LoLManager.instance.curScore += mScore;
