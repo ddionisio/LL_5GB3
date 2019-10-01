@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EventMask:
     serializedVersion: 2
     m_Bits: 256
-  m_MaxRayIntersections: 3
+  m_MaxRayIntersections: 1
 --- !u!1 &5506695492053423872
 GameObject:
   m_ObjectHideFlags: 0
