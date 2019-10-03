@@ -7,8 +7,11 @@ public class LevelController : GameModeController<LevelController> {
     public ShapeCategoryData[] shapeCategories;
 
     public bool analyzeIsShapeSolid;
+
     [M8.EnumMask]
     public ShapeAnalyzeModal.MeasureDisplayFlag analyzeMeasureDisplay;
+
+    public bool analyzeShowDragInstruct;
 
     [Header("Interactions")]
     [M8.TagSelector]
@@ -109,6 +112,7 @@ public class LevelController : GameModeController<LevelController> {
         mAnalyzeParms[ShapeAnalyzeModal.parmMeasureDisplayFlags] = analyzeMeasureDisplay;
         mAnalyzeParms[ShapeAnalyzeModal.parmShapeProfile] = lastShapeCollected;
         mAnalyzeParms[ShapeAnalyzeModal.parmShapes] = shapeCategories;
+        mAnalyzeParms[ShapeAnalyzeModal.parmIsDragInstruct] = analyzeShowDragInstruct;
 
         M8.ModalManager.main.Open(GameData.instance.modalShapeAnalyze, mAnalyzeParms);
     }

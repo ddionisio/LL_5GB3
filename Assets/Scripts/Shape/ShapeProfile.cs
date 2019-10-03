@@ -66,6 +66,9 @@ public class ShapeProfile : MonoBehaviour {
     }
 
     public void ComputeAttributes() {
+        if(scale == Vector3.zero)
+            scale = shape.transform.localScale;
+
         Vector2 s = scale;
         var settings = shape.settings;
         var count = settings.polyVertices.Length;

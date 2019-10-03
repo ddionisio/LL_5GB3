@@ -46,14 +46,16 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 005bba6aafc2d7b4f848907882ae853d, type: 3}
     - {fileID: 102900000, guid: a173bd8b3ab1bd8408f988292f7a2231, type: 3}
     - {fileID: 102900000, guid: 6f18ba041cf39b049b92b6e7c9f55214, type: 3}
-    totalSpriteSurfaceArea: 72560
+    totalSpriteSurfaceArea: 104084
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 8eb70a00d23d5b349b003912d3e05daf, type: 3}
+  - {fileID: 21300000, guid: 1e8ce290db41b0d4ca776a5339660a69, type: 3}
   - {fileID: 21300000, guid: be98f690b6a68d8478a95623f406a172, type: 3}
+  - {fileID: 21300000, guid: 372df8e0fbf2db748b63dc9680eb9d55, type: 3}
   - {fileID: 21300000, guid: f4683e31b11d8c249ac19e37611319cd, type: 3}
   - {fileID: 21300000, guid: 1bb0cc5141a073b4aa089346df8cd0a3, type: 3}
+  - {fileID: 21300000, guid: ba0fdc81de198344b8ed41f4ca5b5b98, type: 3}
   - {fileID: 21300000, guid: 3821ed81270146041a91f097758a2b70, type: 3}
   - {fileID: 21300002, guid: 2c182d91a96c3c949bcbade9ea5d4ba4, type: 3}
   - {fileID: 21300000, guid: 2c182d91a96c3c949bcbade9ea5d4ba4, type: 3}
@@ -109,10 +111,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d100bf3fba8e48343b4f69fe5447d682, type: 3}
   - {fileID: 21300000, guid: 49f63cbf9fa458c4cbc656fbdbb5124a, type: 3}
   m_PackedSpriteNamesToIndex:
-  - landscapeTop
+  - blob
   - star
+  - planet
   - downArrow
   - triangle
+  - mouth_smile
   - blob4
   - tutorialArrow2_bottom
   - tutorialArrow2

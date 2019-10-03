@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: galaxyScrollAdd
-  m_Shader: {fileID: 4800000, guid: 4ca8d8ed0ef45464aa21ca98fd29672b, type: 3}
+  m_Name: galaxyScroll
+  m_Shader: {fileID: 4800000, guid: d820522e0b45667488f2a0bbde54b16e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,8 +40,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 412ca0178449a7f41a3fd071196141b8, type: 3}
-        m_Scale: {x: 2, y: 1.5}
+        m_Texture: {fileID: 2800000, guid: 44bfb858b9f11934fa07f8ec53def7c2, type: 3}
+        m_Scale: {x: 0.06, y: 0.06}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -72,8 +72,9 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - speedX: 0.01
-    - speedY: 0.01
+    - speedX: 0.006
+    - speedY: 0.006
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0.24313726}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - colorMod1: {r: 0.46226418, g: 0.29872733, b: 0.39824957, a: 1}

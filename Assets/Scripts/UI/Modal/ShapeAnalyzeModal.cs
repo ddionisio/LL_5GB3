@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop {
+public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop, M8.IModalActive {
     public const string parmUseSolid = "useSolid";
+    public const string parmIsDragInstruct = "dragInstruct";
     public const string parmMeasureDisplayFlags = "measureDisplayFlags"; //MeasureDisplayFlag mask
     public const string parmShapeProfile = "shape"; //ShapeProfile
     public const string parmShapes = "shapes"; //ShapeCategoryData[]
@@ -59,6 +60,10 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
     public AnimatorEnterExit nextBase;
 
+    [Header("Drag Instruct")]
+    public DragToGuideWidget dragGuide;
+    public GameObject dragInstructGO;
+
     private bool mShapeUseSolid;
     private MeasureDisplayFlag mMeasureDisplayFlags;
     private ShapeProfile mShapeProfile;
@@ -90,12 +95,18 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
     private Mode mCurMode = Mode.None;
 
+    private bool mIsDragInstruct;
+    private ShapeAnalyzeCategoryWidget mDragInstructTarget;
+    private Coroutine mDragInstructRout;
+    private bool mIsDragInstructApplied;
+
     private Coroutine mRout;
 
     public void Next() {
         switch(mCurMode) {
-            case Mode.PickCategories:
+            case Mode.PickCategories:                
                 mCurMode = Mode.Score;
+                ApplyDragInstruct();
                 mRout = StartCoroutine(DoScore());
                 break;
 
@@ -110,8 +121,25 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         }
     }
 
+    void M8.IModalActive.SetActive(bool aActive) {
+        if(aActive) {
+            ApplyDragInstruct();
+        }
+    }
+
     void M8.IModalPop.Pop() {
         CancelRout();
+
+        if(mIsDragInstruct) {
+            if(mDragInstructRout != null) {
+                StopCoroutine(mDragInstructRout);
+                mDragInstructRout = null;
+            }
+
+            dragGuide.Hide();
+
+            mIsDragInstructApplied = true;
+        }
 
         DefaultActiveDisplay();
     }
@@ -121,6 +149,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         mShapeUseSolid = false;
         mMeasureDisplayFlags = MeasureDisplayFlag.None;
         mShapeProfile = null;
+
+        mIsDragInstruct = false;
 
         mShapeCategories.Clear();
         mShapeAttributes.Clear();
@@ -137,6 +167,11 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
             if(parms.ContainsKey(parmMeasureDisplayFlags))
                 mMeasureDisplayFlags = parms.GetValue<MeasureDisplayFlag>(parmMeasureDisplayFlags);
+
+            if(!mIsDragInstructApplied) { //only show drag instruction once
+                if(parms.ContainsKey(parmIsDragInstruct))
+                    mIsDragInstruct = parms.GetValue<bool>(parmIsDragInstruct);
+            }
 
             if(parms.ContainsKey(parmShapeProfile))
                 mShapeProfile = parms.GetValue<ShapeProfile>(parmShapeProfile);
@@ -168,6 +203,12 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
                     widget.transform.SetParent(categoryPickContainer, false);
 
                     mShapeCategoryWidgetActivePicks.Add(widget);
+
+                    //pick a target for drag instruct
+                    if(mIsDragInstruct && !mDragInstructTarget) {
+                        if(mShapeCategories.Exists(category))
+                            mDragInstructTarget = widget;
+                    }
                 }
             }
         }
@@ -298,10 +339,15 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
                 }
             }
         }
+
+        ApplyDragInstruct();
     }
 
     void OnCategoryDragCancel(ShapeAnalyzeCategoryWidget widget) {
         categoryHighlightGO.SetActive(false);
+
+        if(mDragInstructTarget == widget)
+            ApplyDragInstruct();
     }
 
     IEnumerator DoScore() {
@@ -601,5 +647,42 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         categoryPickBase.gameObject.SetActive(false);
         scoreBase.gameObject.SetActive(false);
         nextBase.gameObject.SetActive(false);
+    }
+
+    private void ApplyDragInstruct() {
+        if(mIsDragInstruct) {
+            if(mDragInstructRout != null) {
+                StopCoroutine(mDragInstructRout);
+                mDragInstructRout = null;
+            }
+
+            if(mCurMode == Mode.PickCategories) {
+                mDragInstructRout = StartCoroutine(DoDragInstruct());
+            }
+            else {
+                dragGuide.Hide();
+                dragInstructGO.SetActive(false);
+            }
+        }
+    }
+
+    IEnumerator DoDragInstruct() {
+        if(mShapeCategoryWidgetActivePicks.Exists(mDragInstructTarget)) {
+            yield return new WaitForSeconds(0.1f); //slight delay to allow UIs to position properly
+
+            if(dragGuide.isActive)
+                dragGuide.UpdatePositions(mDragInstructTarget.transform.position, categoryContainer.position);
+            else
+                dragGuide.Show(false, mDragInstructTarget.transform.position, categoryContainer.position);
+
+            dragInstructGO.SetActive(true);
+        }
+        else if(mShapeCategoryWidgetActivePlaced.Exists(mDragInstructTarget)) {
+            dragGuide.Hide();
+
+            dragInstructGO.SetActive(false);
+        }
+
+        mDragInstructRout = null;
     }
 }
