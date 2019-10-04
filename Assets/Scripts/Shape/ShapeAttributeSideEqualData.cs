@@ -9,6 +9,7 @@ using UnityEngine;
 public class ShapeAttributeSideEqualData : ShapeAttributeData {
     public int count = 2; //ensure it is at least 2 for this to make sense
     public bool isAll;
+    public bool isExplicit; //if true, matches must equal count
 
     public override bool Evaluate(ShapeProfile shapeProfile) {
         int maxEqualCount = 0;
@@ -35,6 +36,6 @@ public class ShapeAttributeSideEqualData : ShapeAttributeData {
         if(isAll)
             return maxEqualCount == sides.Length;
 
-        return maxEqualCount >= count;
+        return isExplicit ? maxEqualCount == count : maxEqualCount >= count;
     }
 }

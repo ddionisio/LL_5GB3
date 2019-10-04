@@ -44,6 +44,12 @@ MonoBehaviour:
     path: Assets/Scenes/level1.unity
   - name: level2
     path: Assets/Scenes/level2.unity
+  - name: level3
+    path: Assets/Scenes/level3.unity
+  - name: level4
+    path: Assets/Scenes/level4.unity
+  - name: level5
+    path: Assets/Scenes/level5.unity
   end:
     name: 
     path: 

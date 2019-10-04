@@ -142,6 +142,10 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         }
 
         DefaultActiveDisplay();
+
+        ClearCategoryPicks();
+        ClearMeasureDisplays();
+        ClearCategoryPlaced();
     }
 
     void M8.IModalPush.Push(M8.GenericParams parms) {
@@ -157,6 +161,7 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
         //clear placements
         ClearCategoryPicks();
+        ClearMeasureDisplays();
         ClearCategoryPlaced();
 
         ShapeCategoryData[] shapes = null;

@@ -65,10 +65,11 @@ public class ShapeProfile : MonoBehaviour {
         isCollected = true;
     }
 
-    public void ComputeAttributes() {
-        if(scale == Vector3.zero)
-            scale = shape.transform.localScale;
+    public void RefreshScale() {
+        scale = shape.transform.localScale;
+    }
 
+    public void ComputeAttributes() {
         Vector2 s = scale;
         var settings = shape.settings;
         var count = settings.polyVertices.Length;
@@ -139,7 +140,7 @@ public class ShapeProfile : MonoBehaviour {
     }
 
     void Awake() {
-        scale = shape.transform.localScale;
+        RefreshScale();
 
         ComputeAttributes();
     }
