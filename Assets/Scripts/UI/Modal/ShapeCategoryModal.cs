@@ -79,6 +79,8 @@ public class ShapeCategoryModal : M8.ModalController, M8.IModalPush, M8.IModalAc
         prevButton.interactable = false;
         nextButton.interactable = false;
 
+        LoLManager.instance.StopSpeakQueue();
+
         Close();
     }
 
