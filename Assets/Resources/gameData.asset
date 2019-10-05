@@ -50,6 +50,8 @@ MonoBehaviour:
     path: Assets/Scenes/level4.unity
   - name: level5
     path: Assets/Scenes/level5.unity
+  - name: level6
+    path: Assets/Scenes/level6.unity
   end:
     name: 
     path: 
