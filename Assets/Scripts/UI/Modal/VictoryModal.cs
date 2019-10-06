@@ -35,6 +35,7 @@ public class VictoryModal : M8.ModalController, M8.IModalPush {
         for(int i = 0; i < LevelController.instance.shapesCollected.Count; i++)
             mScore += LevelController.instance.shapesCollected[i].score;
 
+        scoreCounter.SetCountImmediate(0);
         scoreCounter.count = mScore;
 
         var rank = GameData.instance.GetRank(Mathf.Clamp01((float)mScore / mScoreMax));

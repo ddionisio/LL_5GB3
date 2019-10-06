@@ -57,5 +57,5 @@ MonoBehaviour:
   - name: level8
     path: Assets/Scenes/level8.unity
   end:
-    name: 
-    path: 
+    name: end
+    path: Assets/Scenes/end.unity

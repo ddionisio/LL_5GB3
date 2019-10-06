@@ -22,6 +22,7 @@
     "categories_title": "CATEGORIES",
     "score": "Score:",
     "score_total": "Total Score:",
+    "score_final": "Final Score:",
     "rank": "Rank:",
     "property": "Property",
     "ellipse": "Ellipse",
@@ -81,7 +82,7 @@
     "instruct_collect": "Press and hold the shape to collect it.",
     "instruct_category_drag": "Press and drag the item towards the category, and release.",
     "intro_0_0": "Welcome to Kero Shapes!",
-    "intro_0_1": "In this game, you will be helping these fine capable frogs to categorize shapes that are scattered about in the land.",
+    "intro_0_1": "In this game, you will be helping these fine capable frogs analyze a potentially habitable planet by identifying the shapes scattered across the land.",
     "intro_0_2": "When it comes to categorizing shapes, one must figure out the common attributes they share.",
     "intro_1_0": "Here are some primary categories and their attributes that differentiate them from each other.",
     "intro_1_1": "For now, we will be focusing on identifying polygons.",
@@ -103,6 +104,7 @@
     "level_intro_8_0": "On this final level, many of the quads will match with a bunch of categories.",
     "level_intro_8_1": "One helpful tip is look at these categories in a hierarchy. Going from top to bottom, each level shares attributes from everything above.",
     "level_intro_8_2": "For example, a square is also: a rectangle, a rhombus, a parallelogram, a trapezoid, and a kite.",
-    "level_intro_8_3": "Now on to reviewing these categories once more!"
+    "level_intro_8_3": "Now on to reviewing these categories once more!",
+    "end_0": "Congratulations!\nYou have successfully helped the spacefaring frogs survey the planet!\nBased on the analysis of the shapes gathered, the planet is habitable!\n\nThank you for playing!"
   }
 }
