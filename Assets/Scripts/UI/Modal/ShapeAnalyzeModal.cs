@@ -64,6 +64,16 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
     public DragToGuideWidget dragGuide;
     public GameObject dragInstructGO;
 
+    [Header("SFX")]
+    [M8.SoundPlaylist]
+    public string sfxEnter;
+    [M8.SoundPlaylist]
+    public string sfxCorrect;
+    [M8.SoundPlaylist]
+    public string sfxWrong;
+    [M8.SoundPlaylist]
+    public string sfxMiss;
+
     private bool mShapeUseSolid;
     private MeasureDisplayFlag mMeasureDisplayFlags;
     private ShapeProfile mShapeProfile;
@@ -104,7 +114,7 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
     public void Next() {
         switch(mCurMode) {
-            case Mode.PickCategories:                
+            case Mode.PickCategories:
                 mCurMode = Mode.Score;
                 ApplyDragInstruct();
                 mRout = StartCoroutine(DoScore());
@@ -112,7 +122,7 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
             case Mode.Score:
                 mCurMode = Mode.None;
-
+                                
                 scoreBase.PlayExit();
                 nextBase.PlayExit();
 
@@ -253,6 +263,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         categoryPickBase.PlayEnter();
 
         mCurMode = Mode.PickCategories;
+
+        M8.SoundPlaylist.instance.Play(sfxEnter, false);
     }
 
     void Awake() {
@@ -394,10 +406,14 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
                 correctCount++;
 
                 mShapeCategoriesPlaced.Add(category);
+
+                M8.SoundPlaylist.instance.Play(sfxCorrect, false);
             }
             else {
                 widget.errorGO.SetActive(true);
                 wrongCount++;
+
+                M8.SoundPlaylist.instance.Play(sfxWrong, false);
             }
 
             yield return wait;
@@ -417,6 +433,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
                     mShapeCategoryWidgetActivePlaced.Add(widget);
 
+                    M8.SoundPlaylist.instance.Play(sfxMiss, false);
+
                     yield return wait;
                 }
             }
@@ -433,6 +451,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
             scoreCounter.count = mShapeProfile.score;
         }
+
+        M8.SoundPlaylist.instance.Play(sfxEnter, false);
 
         //show score
         scoreBase.gameObject.SetActive(true);

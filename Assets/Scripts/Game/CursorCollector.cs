@@ -23,7 +23,13 @@ public class CursorCollector : MonoBehaviour {
     [M8.Animator.TakeSelector(animatorField = "animator")]
     public string takeError;
     [M8.Animator.TakeSelector(animatorField = "animator")]
-    public string takeCollect;    
+    public string takeCollect;
+
+    [Header("SFX")]
+    [M8.SoundPlaylist]
+    public string sfxCollect;
+    [M8.SoundPlaylist]
+    public string sfxError;
 
     public float fillValue {
         get { return mFillValue; }
@@ -41,7 +47,13 @@ public class CursorCollector : MonoBehaviour {
     private float mFillValue;
     private Vector2 mCurVel;
 
+    public void Collect() {
+        M8.SoundPlaylist.instance.Play(sfxCollect, false);
+    }
+
     public void Error() {
+        M8.SoundPlaylist.instance.Play(sfxError, false);
+
         if(animator && !string.IsNullOrEmpty(takeError))
             animator.Play(takeError);
     }

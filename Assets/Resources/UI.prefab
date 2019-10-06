@@ -6967,6 +6967,8 @@ MonoBehaviour:
   correctGO: {fileID: 126172262}
   dragRoot: {fileID: 2044089746}
   dragAreaRoot: {fileID: 2060472873}
+  sfxDragBegin: tapTiny
+  sfxDragEnd: tap
 --- !u!222 &1195304378
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12388,6 +12390,10 @@ MonoBehaviour:
   nextBase: {fileID: 339364135}
   dragGuide: {fileID: 5895321453537352630}
   dragInstructGO: {fileID: 6800173020556375246}
+  sfxEnter: paletteOpen
+  sfxCorrect: correct
+  sfxWrong: wrong
+  sfxMiss: miss
 --- !u!114 &2144032565
 MonoBehaviour:
   m_ObjectHideFlags: 0

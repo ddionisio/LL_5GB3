@@ -17,6 +17,12 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
     public RectTransform dragRoot;
     public Transform dragAreaRoot;
 
+    [Header("SFX")]
+    [M8.SoundPlaylist]
+    public string sfxDragBegin;
+    [M8.SoundPlaylist]
+    public string sfxDragEnd;
+
     public bool isInputEnabled {
         get { return mIsInputEnabled; }
         set {
@@ -89,6 +95,8 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
         mDragMoveTo = eventData.position;
 
         dragRoot.SetParent(dragAreaRoot, true);
+
+        M8.SoundPlaylist.instance.Play(sfxDragBegin, false);
     }
 
     void IDragHandler.OnDrag(PointerEventData eventData) {
@@ -103,7 +111,9 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
     void IEndDragHandler.OnEndDrag(PointerEventData eventData) {
         if(!mIsDragging)
             return;
-                
+
+        M8.SoundPlaylist.instance.Play(sfxDragEnd, false);
+
         dragEndCallback?.Invoke(this, eventData);
 
         EndDrag();

@@ -19,6 +19,8 @@ public class CursorInteractiveCollect : CursorInteractive {
     }
 
     protected override void OnClick() {
+        LevelController.instance.cursor.Collect();
+
         mColl.enabled = false;
         LevelController.instance.CollectShape(mShapeProfile);
     }

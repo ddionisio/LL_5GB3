@@ -6,6 +6,8 @@ public class GameObjectActiveOnActionMode : MonoBehaviour {
 
     public GameObject displayGO;
     public ActionMode mode;
+    [M8.SoundPlaylist]
+    public string sfxActive;
 
     void OnDestroy() {
         if(LevelController.isInstantiated)
@@ -20,6 +22,13 @@ public class GameObjectActiveOnActionMode : MonoBehaviour {
     void OnModeChanged() {
         var active = LevelController.instance.actionMode == mode;
 
-        displayGO.SetActive(active);
+        if(displayGO.activeSelf != active) {
+            displayGO.SetActive(active);
+
+            if(active) {
+                if(!string.IsNullOrEmpty(sfxActive))
+                    M8.SoundPlaylist.instance.Play(sfxActive, false);
+            }
+        }
     }
 }

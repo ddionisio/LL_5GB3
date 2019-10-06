@@ -400,6 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayGO: {fileID: 1562314765}
   mode: 5
+  sfxActive: success
 --- !u!1 &885352655
 GameObject:
   m_ObjectHideFlags: 0
@@ -7677,6 +7678,8 @@ MonoBehaviour:
   takeExit: exit
   takeError: error
   takeCollect: collect
+  sfxCollect: computerBeep
+  sfxError: wrong
 --- !u!223 &3161203089793550701
 Canvas:
   m_ObjectHideFlags: 0
@@ -11032,6 +11035,7 @@ MonoBehaviour:
   takeIdle: idle
   takeExit: exit
   takeCollect: collect
+  sfxCollect: collect
 --- !u!114 &3161203091203224933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12772,7 +12776,7 @@ Transform:
   m_GameObject: {fileID: 3161203091407719613}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.02, y: -0.65, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3161203090374987629}
   m_RootOrder: 8
@@ -13010,6 +13014,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: spaceshipBoosterLower (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1489719681465878992, guid: bb58162ab8c6d7e49bb30e6be25e4532,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1489719681465878995, guid: bb58162ab8c6d7e49bb30e6be25e4532,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13090,6 +13099,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: spaceshipBoosterLower (0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489719681465878992, guid: bb58162ab8c6d7e49bb30e6be25e4532,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1489719681465878995, guid: bb58162ab8c6d7e49bb30e6be25e4532,
         type: 3}

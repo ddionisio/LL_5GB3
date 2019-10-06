@@ -37,6 +37,10 @@ public class Spaceship : MonoBehaviour {
     [M8.Animator.TakeSelector(animatorField = "animator")]
     public string takeCollect;
 
+    [Header("SFX")]
+    [M8.SoundPlaylist]
+    public string sfxCollect;
+
     public bool isBusy { get { return mRout != null; } }
 
     private Coroutine mRout;
@@ -178,6 +182,8 @@ public class Spaceship : MonoBehaviour {
             collectRoot.gameObject.SetActive(true);
 
             mShapeCollect.transform.SetParent(collectShapeAnchor, true);
+
+            M8.SoundPlaylist.instance.Play(sfxCollect, false);
 
             //play collect
             if(animator && !string.IsNullOrEmpty(takeCollect))
