@@ -1,0 +1,9 @@
+An intergalactic fleet of space frogs are looking for a habitable planet to live. Help them out by identifying the odd shapes scattered across the planet's land. With your expertise in categorizing shapes, it should be no problem!
+
+Controls:
+
+Use the touchpad or mouse for interactions.
+
+Collecting a shape - move the cursor on top of the shape, then press and hold till the spaceship arrives to collect it.
+Selecting categories - drag the category from the right-most box towards the category box on the left, then release.
+Removing items from category - drag the item outside the category box's boundary, and release.
