@@ -79,8 +79,10 @@
     "quad_desc": "· Formed by four straight lines connected in a loop.\n· Points are plotted on a plane.\n· Angles sum up to 360°.",
     "side": "Side (length)",
     "point": "Point (x, y)",
+    "hierarchy": "Hierarchy",
     "instruct_collect": "Press and hold the shape to collect it.",
     "instruct_category_drag": "Press and drag the item towards the category, and release.",
+    "instruct_category_detail": "Press any of the categories to review them.",
     "intro_0_0": "Welcome to Kero Shapes!",
     "intro_0_1": "In this game, you will be helping these fine capable frogs analyze a potentially habitable planet by identifying the shapes scattered across the land.",
     "intro_0_2": "When it comes to categorizing shapes, one must figure out the common attributes they share.",
@@ -108,11 +110,12 @@
     "end_0": "Congratulations!\nYou have successfully helped the spacefaring frogs survey the planet!\nBased on the analysis of the shapes gathered, the planet is habitable!\n\nThank you for playing!",
     "level_title_0": "1 - Polygons #1",
     "level_title_1": "2 - Polygons #2",
-    "level_title_2": "3 - Triangles (Angles)",
-    "level_title_3": "4 - Triangles (Sides)",
-    "level_title_4": "5 - Triangles (All)",
-    "level_title_5": "6 - Quads (Parallelograms)",
-    "level_title_6": "7 - Quads (Misc.)",
-    "level_title_7": "8 - Quads (Hierarchy)"
+    "level_title_2": "3 - Polygons #3",
+    "level_title_3": "4 - Triangles (Angles)",
+    "level_title_4": "5 - Triangles (Sides)",
+    "level_title_5": "6 - Triangles (All)",
+    "level_title_6": "7 - Quads (Parallelograms)",
+    "level_title_7": "8 - Quads (Types)",
+    "level_title_8": "9 - Quads (Hierarchy)"
   }
 }

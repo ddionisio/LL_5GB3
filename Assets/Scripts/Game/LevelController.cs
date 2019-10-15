@@ -13,6 +13,8 @@ public class LevelController : GameModeController<LevelController> {
 
     public bool analyzeShowDragInstruct;
 
+    public bool showHierarchy;
+
     [Header("Interactions")]
     [M8.TagSelector]
     public string tagSpaceship = "Spaceship";
@@ -113,6 +115,7 @@ public class LevelController : GameModeController<LevelController> {
         mAnalyzeParms[ShapeAnalyzeModal.parmShapeProfile] = lastShapeCollected;
         mAnalyzeParms[ShapeAnalyzeModal.parmShapes] = shapeCategories;
         mAnalyzeParms[ShapeAnalyzeModal.parmIsDragInstruct] = analyzeShowDragInstruct;
+        mAnalyzeParms[ShapeAnalyzeModal.parmShowHierarchy] = showHierarchy;
 
         M8.ModalManager.main.Open(GameData.instance.modalShapeAnalyze, mAnalyzeParms);
     }

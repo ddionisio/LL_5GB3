@@ -13,7 +13,9 @@ public class FinalScoreListWidget : MonoBehaviour {
 
             var itm = GameObject.Instantiate(template, root);
 
-            itm.titleText.text = M8.Localize.Get(titleTextRef);
+            var title = M8.Localize.Get(titleTextRef);
+
+            itm.titleText.text = title;
 
             int score = GameData.instance.GetLevelScore(i);
             int scoreMax = GameData.instance.GetLevelScoreMax(i);
@@ -26,6 +28,7 @@ public class FinalScoreListWidget : MonoBehaviour {
             itm.rankText.color = rank.color;
 
             itm.index = i;
+            itm.title = title;
         }
 
         template.gameObject.SetActive(false);

@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop, M8.IModalActive {
     public const string parmUseSolid = "useSolid";
     public const string parmIsDragInstruct = "dragInstruct";
+    public const string parmShowHierarchy = "showHierarchy";
     public const string parmMeasureDisplayFlags = "measureDisplayFlags"; //MeasureDisplayFlag mask
     public const string parmShapeProfile = "shape"; //ShapeProfile
     public const string parmShapes = "shapes"; //ShapeCategoryData[]
@@ -64,6 +65,12 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
     public DragToGuideWidget dragGuide;
     public GameObject dragInstructGO;
 
+    [Header("Category Instruct")]
+    public GameObject categoryInstructGO;
+
+    [Header("Hierarchy")]
+    public GameObject hierarchyGO;
+
     [Header("SFX")]
     [M8.SoundPlaylist]
     public string sfxEnter;
@@ -110,6 +117,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
     private Coroutine mDragInstructRout;
     private bool mIsDragInstructApplied;
 
+    private bool mIsCategoryInstructShown;
+
     private Coroutine mRout;
 
     public void Next() {
@@ -117,12 +126,17 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
             case Mode.PickCategories:
                 mCurMode = Mode.Score;
                 ApplyDragInstruct();
+
+                hierarchyGO.SetActive(false);
+
                 mRout = StartCoroutine(DoScore());
                 break;
 
             case Mode.Score:
                 mCurMode = Mode.None;
-                                
+
+                categoryInstructGO.SetActive(false);
+
                 scoreBase.PlayExit();
                 nextBase.PlayExit();
 
@@ -166,6 +180,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
         mIsDragInstruct = false;
 
+        bool showHierarchy = false;
+
         mShapeCategories.Clear();
         mShapeAttributes.Clear();
 
@@ -193,6 +209,9 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
             if(parms.ContainsKey(parmShapes))
                 shapes = parms.GetValue<ShapeCategoryData[]>(parmShapes);
+
+            if(parms.ContainsKey(parmShowHierarchy))
+                showHierarchy = parms.GetValue<bool>(parmShowHierarchy);
         }
 
         //determine which categories fit the shape profile
@@ -261,6 +280,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
         categoryPickBase.gameObject.SetActive(true);
         categoryPickBase.PlayEnter();
+
+        hierarchyGO.SetActive(showHierarchy);
 
         mCurMode = Mode.PickCategories;
 
@@ -390,6 +411,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
         //ClearMeasureDisplays();
 
+        bool showCategoryDetailInstruct = false;
+
         int correctCount = 0;
         int wrongCount = 0;
 
@@ -416,6 +439,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
                 wrongCount++;
 
                 M8.SoundPlaylist.instance.Play(sfxWrong, false);
+
+                showCategoryDetailInstruct = true;
             }
 
             yield return wait;
@@ -438,9 +463,16 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
 
                     M8.SoundPlaylist.instance.Play(sfxMiss, false);
 
+                    showCategoryDetailInstruct = true;
+
                     yield return wait;
                 }
             }
+        }
+
+        if(showCategoryDetailInstruct && !mIsCategoryInstructShown) {
+            categoryInstructGO.SetActive(true);
+            mIsCategoryInstructShown = true;
         }
 
         //compute score
@@ -675,6 +707,10 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
         categoryPickBase.gameObject.SetActive(false);
         scoreBase.gameObject.SetActive(false);
         nextBase.gameObject.SetActive(false);
+
+        categoryInstructGO.SetActive(false);
+
+        hierarchyGO.SetActive(false);
     }
 
     private void ApplyDragInstruct() {
