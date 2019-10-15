@@ -105,6 +105,14 @@
     "level_intro_8_1": "One helpful tip is to look at these categories in a hierarchy. Going from top to bottom, each level shares attributes from everything above.",
     "level_intro_8_2": "For example, a square is also: a rectangle, a rhombus, a parallelogram, a trapezoid, and a kite.",
     "level_intro_8_3": "Now on to reviewing these categories once more!",
-    "end_0": "Congratulations!\nYou have successfully helped the spacefaring frogs survey the planet!\nBased on the analysis of the shapes gathered, the planet is habitable!\n\nThank you for playing!"
+    "end_0": "Congratulations!\nYou have successfully helped the spacefaring frogs survey the planet!\nBased on the analysis of the shapes gathered, the planet is habitable!\n\nThank you for playing!",
+    "level_title_0": "1 - Polygons #1",
+    "level_title_1": "2 - Polygons #2",
+    "level_title_2": "3 - Triangles (Angles)",
+    "level_title_3": "4 - Triangles (Sides)",
+    "level_title_4": "5 - Triangles (All)",
+    "level_title_5": "6 - Quads (Parallelograms)",
+    "level_title_6": "7 - Quads (Misc.)",
+    "level_title_7": "8 - Quads (Hierarchy)"
   }
 }

@@ -213,7 +213,7 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
                     var widget = mShapeCategoryWidgetCache.RemoveLast();
 
                     widget.Setup(category);
-                    widget.isInputEnabled = true;
+                    widget.isDragEnabled = true;
 
                     widget.transform.SetParent(categoryPickContainer, false);
 
@@ -368,12 +368,14 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
     }
 
     IEnumerator DoScore() {
-        //lock inputs
+        //lock inputs, enabled clicks on placed
         for(int i = 0; i < mShapeCategoryWidgetActivePicks.Count; i++)
-            mShapeCategoryWidgetActivePicks[i].isInputEnabled = false;
+            mShapeCategoryWidgetActivePicks[i].isDragEnabled = false;
 
-        for(int i = 0; i < mShapeCategoryWidgetActivePlaced.Count; i++)
-            mShapeCategoryWidgetActivePlaced[i].isInputEnabled = false;
+        for(int i = 0; i < mShapeCategoryWidgetActivePlaced.Count; i++) {
+            mShapeCategoryWidgetActivePlaced[i].isDragEnabled = false;
+            mShapeCategoryWidgetActivePlaced[i].isClickEnabled = true;
+        }
 
         //hide next
         yield return nextBase.PlayExitWait();
@@ -427,6 +429,7 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
                     var widget = mShapeCategoryWidgetCache.RemoveLast();
 
                     widget.Setup(category);
+                    widget.isClickEnabled = true;
                     widget.missGO.SetActive(true);
 
                     widget.transform.SetParent(categoryContainer, false);

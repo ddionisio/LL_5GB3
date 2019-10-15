@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
     [Header("Config")]
     public float moveDelay = 0.15f;
 
@@ -13,6 +13,7 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
     public GameObject errorGO;
     public GameObject missGO;
     public GameObject correctGO;
+    public GameObject highlightGO; //enabled if click is active
 
     public RectTransform dragRoot;
     public Transform dragAreaRoot;
@@ -23,17 +24,27 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
     [M8.SoundPlaylist]
     public string sfxDragEnd;
 
-    public bool isInputEnabled {
-        get { return mIsInputEnabled; }
+    public bool isDragEnabled {
+        get { return mIsDragEnabled; }
         set {
-            if(mIsInputEnabled != value) {
-                mIsInputEnabled = value;
+            if(mIsDragEnabled != value) {
+                mIsDragEnabled = value;
 
-                if(!mIsInputEnabled && mIsDragging) {
+                if(!mIsDragEnabled && mIsDragging) {
                     EndDrag();
 
                     dragCancelCallback?.Invoke(this);
                 }
+            }
+        }
+    }
+
+    public bool isClickEnabled {
+        get { return mIsClickEnabled; }
+        set {
+            if(mIsClickEnabled != value) {
+                mIsClickEnabled = value;
+                RefreshHighlight();
             }
         }
     }
@@ -44,18 +55,25 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
     public event System.Action<ShapeAnalyzeCategoryWidget, PointerEventData> dragEndCallback;
     public event System.Action<ShapeAnalyzeCategoryWidget> dragCancelCallback;
 
-    private bool mIsInputEnabled;
-
+    private bool mIsDragEnabled;
+    private bool mIsClickEnabled;
     private bool mIsDragging;
+    private bool mIsHover;
 
     private Vector2 mDragMoveTo;
     private Vector2 mMoveVel;
 
+    private M8.GenericParams mDetailParms = new M8.GenericParams();
+        
     public void Setup(ShapeCategoryData dat) {
         data = dat;
 
+        mDetailParms[ShapeCategoryDetailModal.parmShapeCategoryData] = dat;
+
         mIsDragging = false;
-        mIsInputEnabled = false;
+        mIsDragEnabled = false;
+        mIsClickEnabled = false;
+        mIsHover = false;
 
         dragRoot.SetParent(transform, false);
         dragRoot.localPosition = Vector3.zero;
@@ -85,14 +103,32 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
 
     }
 
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
+        mIsHover = true;
+        RefreshHighlight();
+    }
+
+    void IPointerExitHandler.OnPointerExit(PointerEventData eventData) {
+        mIsHover = false;
+        RefreshHighlight();
+    }
+
+    void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
+        if(mIsClickEnabled) {
+            M8.ModalManager.main.Open(GameData.instance.modalShapeCategoryDetail, mDetailParms);
+        }
+    }
+
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData) {
-        if(!mIsInputEnabled)
+        if(!mIsDragEnabled)
             return;
 
         mIsDragging = true;
         mMoveVel = Vector2.zero;
 
         mDragMoveTo = eventData.position;
+
+        RefreshHighlight();
 
         dragRoot.SetParent(dragAreaRoot, true);
 
@@ -124,5 +160,13 @@ public class ShapeAnalyzeCategoryWidget : MonoBehaviour, IBeginDragHandler, IDra
 
         dragRoot.SetParent(transform, false);
         dragRoot.localPosition = Vector3.zero;
+
+        RefreshHighlight();
+    }
+
+    private void RefreshHighlight() {
+        if(!highlightGO) return;
+
+        highlightGO.SetActive(mIsClickEnabled && !mIsDragging && mIsHover);
     }
 }

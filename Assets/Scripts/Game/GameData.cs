@@ -24,6 +24,7 @@ public class GameData : M8.SingletonScriptableObject<GameData> {
 
     public string modalShapeCategory = "shapeCategory";
     public string modalShapeAnalyze = "shapeAnalyzer";
+    public string modalShapeCategoryDetail = "shapeCategoryDetail";
 
     public int scoreShape = 1000;
     public int scorePenalty = 100;
