@@ -117,8 +117,6 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
     private Coroutine mDragInstructRout;
     private bool mIsDragInstructApplied;
 
-    private bool mIsCategoryInstructShown;
-
     private Coroutine mRout;
 
     public void Next() {
@@ -470,9 +468,8 @@ public class ShapeAnalyzeModal : M8.ModalController, M8.IModalPush, M8.IModalPop
             }
         }
 
-        if(showCategoryDetailInstruct && !mIsCategoryInstructShown) {
+        if(showCategoryDetailInstruct) {
             categoryInstructGO.SetActive(true);
-            mIsCategoryInstructShown = true;
         }
 
         //compute score
